@@ -8,11 +8,15 @@ class User < ApplicationRecord
 
   has_many :questions
 
+  before_validation :username_downcase
+  
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
+  
   validates :username, length: { maximum: 40, too_long: '%{count} characters is the maximum allowed' }
+  
   validates :email, format: { with: /[\w+\-\_.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/i }
-  validates :username, format: { with: /[a-z\d\_]{1,40}/, message: 'Допустимы только латинские буквы, цифры и знак _'}
+  validates :username, format: { with: /[\w\d\_]{1,40}/i, message: 'You can only use latin letters, digits or _ character'}
 
   attr_accessor :password
 
@@ -21,6 +25,10 @@ class User < ApplicationRecord
 
   before_save :encrypt_password
 
+  def username_downcase
+    self.username = username.downcase!
+  end
+  
   def encrypt_password
     if password.present?
       # Создаем т.н. «соль» — случайная строка, усложняющая задачу хакерам по
