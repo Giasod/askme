@@ -1,8 +1,8 @@
+# frozen_string_literal: true
+
 class Question < ApplicationRecord
-  
   belongs_to :user
-  
-  validates :text, presence: true
-  validates :text, length: { maximum: 255 }
-  
+
+  validates :text, length: { maximum: 255 },
+                   presence: true
 end
