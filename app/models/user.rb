@@ -3,33 +3,26 @@ require 'openssl'
 class User < ApplicationRecord
   ITERATIONS = 20_000
   DIGEST = OpenSSL::Digest::SHA256.new
+  EMAIL_REGEX = /[\-\w+.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/
+  USERNAME_REGEX = /\A[\w]+\Z/
 
   attr_accessor :password
 
   has_many :questions
 
-  validates :email, :username, presence: true, uniqueness: true
+  validates :email, format: { with: EMAIL_REGEX },
+                    uniqueness: { case_sensitive: false },
+                    presence: true
+  
+  validates :username, format: { with: USERNAME_REGEX },
+                       length: { maximum: 40 },
+                       uniqueness: { case_sensitive: false },
+                       presence: true
+  
   validates :password, presence: true, confirmation: true, on: :create
-
-  validates :username, length: { maximum: 40, too_long: '%{count} characters is the maximum allowed' }
-
-  validates :email, format: { with: /[\-\w+.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/i }
-  validates :username, format: { with: /\w/i }
-
-  before_validation :username_downcase
+  
+  before_validation :username_and_email_downcase
   before_save :encrypt_password
-
-  def encrypt_password
-    if password.present?
-      self.password_salt = User.hash_to_string(OpenSSL::Random.random_bytes(16))
-
-      self.password_hash = User.hash_to_string(
-        OpenSSL::PKCS5.pbkdf2_hmac(
-          password, password_salt, ITERATIONS, DIGEST.length, DIGEST
-        )
-      )
-    end
-  end
 
   def self.hash_to_string(password_hash)
     password_hash.unpack1('H*')
@@ -53,7 +46,20 @@ class User < ApplicationRecord
 
   private
 
-  def username_downcase
+  def encrypt_password
+    if password.present?
+      self.password_salt = User.hash_to_string(OpenSSL::Random.random_bytes(16))
+    
+      self.password_hash = User.hash_to_string(
+          OpenSSL::PKCS5.pbkdf2_hmac(
+              password, password_salt, ITERATIONS, DIGEST.length, DIGEST
+          )
+      )
+    end
+  end
+  
+  def username_and_email_downcase
     self.username = username.downcase!
+    self.email = email.downcase!
   end
 end
