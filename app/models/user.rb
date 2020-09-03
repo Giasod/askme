@@ -3,19 +3,19 @@ require 'openssl'
 class User < ApplicationRecord
   ITERATIONS = 20_000
   DIGEST = OpenSSL::Digest::SHA256.new
-  USERNAME_REGEX = /\A[\w]+\Z/
+  USERNAME_REGEX = /\A\w+\Z/
 
   attr_accessor :password
 
   has_many :questions
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP },
-                    uniqueness: { case_sensitive: false },
+                    uniqueness: true,
                     presence: true
   
   validates :username, format: { with: USERNAME_REGEX },
                        length: { maximum: 40 },
-                       uniqueness: { case_sensitive: false },
+                       uniqueness: true,
                        presence: true
   
   validates :password, presence: true, confirmation: true, on: :create
@@ -58,7 +58,7 @@ class User < ApplicationRecord
   end
   
   def username_and_email_downcase
-    self.username = username.downcase!
-    self.email = email.downcase!
+    self.username = username.downcase
+    self.email = email.downcase
   end
 end
