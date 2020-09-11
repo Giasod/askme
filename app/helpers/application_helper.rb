@@ -8,6 +8,13 @@ module ApplicationHelper
       asset_pack_path('media/images/avatar.jpg')
     end
   end
+
+  def count_q_and_a
+    total = @questions.size
+    answered = @questions.select { |question| question.answer.present? }.size
+    unanswered = total - answered
+    { total: total, answered: answered, unanswered: unanswered }
+  end
   
   # Хелпер, рисующий span тэг с иконкой из font-awesome
   def fa_icon(icon_class)

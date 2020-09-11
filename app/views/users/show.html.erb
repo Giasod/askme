@@ -22,13 +22,14 @@
   </div>
   <div class="user-statistics container text-center">
     <div class="column-1-3">
-      <h1 class="title-small">Всего: <%= t(:question, count: 1)  %></h1>
+      <% count = count_q_and_a %>
+      <h1 class="title-small">Всего: <%= t(:question, count: count[:total])  %></h1>
     </div>
     <div class="column-1-3">
-      <h1 class="title-small">С ответом: <%= t(:question, count: 10)  %> </h1>
+      <h1 class="title-small">С ответом: <%= t(:question, count: count[:answered])  %> </h1>
     </div>
     <div class="column-1-3">
-      <h1 class="title-small">Без ответа: <%= t(:question, count: 15) %></h1>
+      <h1 class="title-small">Без ответа: <%= t(:question, count: count[:unanswered]) %></h1>
     </div>
   </div>
 </div>
