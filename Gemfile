@@ -7,7 +7,6 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'puma', '~> 4.1'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 gem 'rails-i18n', '~> 6.0.0'
-gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 4.0'
 
 group :production do
@@ -15,6 +14,6 @@ group :production do
 end
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'sqlite3', '~> 1.4'
 end

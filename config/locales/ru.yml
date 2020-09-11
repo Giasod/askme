@@ -1,5 +1,5 @@
 ru:
-  kid:
+  question:
     zero: 'нет вопросов'
     one: '%{count} вопрос'
     few: '%{count} вопроса'
