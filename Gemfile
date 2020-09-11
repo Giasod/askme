@@ -6,6 +6,7 @@ ruby '2.7.1'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'puma', '~> 4.1'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
+gem 'rails_12factor'
 gem 'rails-i18n', '~> 6.0.0'
 gem 'webpacker', '~> 4.0'
 
