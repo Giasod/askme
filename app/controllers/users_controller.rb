@@ -1,12 +1,8 @@
 
 class UsersController < ApplicationController
-  # Загружаем юзера из базы для экшенов кроме :index, :create, :new
+  
   before_action :load_user, except: %i[index create new]
-
-  # Проверяем имеет ли юзер доступ к экшену, делаем это для всех действий, кроме
-  # :index, :new, :create, :show — к этим действиям есть доступ у всех, даже у
-  # тех, у кого вообще нет аккаунта на нашем сайте.
-  before_action :authorize_user, except: %i[index new create show]
+  before_action :authorize_user, except: %i[index new create show destroy]
 
   def index
     @users = User.all
@@ -78,6 +74,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user.destroy
+    redirect_to root_path, notice: 'Пользователь удалён'
+  end
+  
   # Это действие отзывается, когда пользователь заходит по адресу /users/:id,
   # например /users/1
   #
