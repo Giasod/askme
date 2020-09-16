@@ -9,6 +9,10 @@
       <div class="question-text">
         <%= link_to "#{question.author.name} (@#{question.author.username})", user_path(question.author) %>
       </div>
+    <% else %>
+      <div class="question-text">
+        <p>Анонимный пользователь</p>
+      </div>
     <% end %>
 
 
@@ -40,7 +44,7 @@
     <div class="question-actions">
       <%= link_to fa_icon(edit_icon), edit_question_path(question) %>
       <%= link_to fa_icon('trash-o'), question_path(question),
-                  method: :delete, data: {confirm: 'Точно удалить вопрос?'} %>
+                  method: :delete, data: { confirm: 'Точно удалить вопрос?' } %>
     </div>
   <% end %>
 </div>

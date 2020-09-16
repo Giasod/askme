@@ -3,7 +3,8 @@ require 'openssl'
 class User < ApplicationRecord
   ITERATIONS = 20_000
   DIGEST = OpenSSL::Digest::SHA256.new
-  USERNAME_REGEX = /\A\w+\Z/
+  USERNAME_REGEX = /\A\w+\Z/.freeze
+  COLOR_REGEX = /\A#?(?:[A-F0-9]{3}){1,2}\z/i.freeze
 
   attr_accessor :password
 
@@ -12,14 +13,16 @@ class User < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP },
                     uniqueness: true,
                     presence: true
-  
+
   validates :username, format: { with: USERNAME_REGEX },
                        length: { maximum: 40 },
                        uniqueness: true,
                        presence: true
-  
+
+  validates :color, format: { with: COLOR_REGEX }
+
   validates :password, presence: true, confirmation: true, on: :create
-  
+
   before_validation :username_and_email_downcase
   before_save :encrypt_password
 
@@ -48,15 +51,15 @@ class User < ApplicationRecord
   def encrypt_password
     if password.present?
       self.password_salt = User.hash_to_string(OpenSSL::Random.random_bytes(16))
-    
+
       self.password_hash = User.hash_to_string(
-          OpenSSL::PKCS5.pbkdf2_hmac(
-              password, password_salt, ITERATIONS, DIGEST.length, DIGEST
-          )
+        OpenSSL::PKCS5.pbkdf2_hmac(
+          password, password_salt, ITERATIONS, DIGEST.length, DIGEST
+        )
       )
     end
   end
-  
+
   def username_and_email_downcase
     username&.downcase!
     email&.downcase!
