@@ -4,17 +4,9 @@
 
 <div class="question">
   <div class="question-content">
-    <% # Автор и ссылка на него %>
-    <% if question.author.present? %>
-      <div class="question-text">
-        <%= link_to "#{question.author.name} (@#{question.author.username})", user_path(question.author) %>
-      </div>
-    <% else %>
-      <div class="question-text">
-        <p>Анонимный пользователь</p>
-      </div>
-    <% end %>
-
+    <div class="question-author">
+    <%= question_author(question) %>
+    </div>
 
     <%# Текст вопроса %>
     <div class="question-text text-lead">
