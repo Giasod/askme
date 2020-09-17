@@ -6,12 +6,13 @@ ru:
     many: '%{count} вопросов'
     other: 'вопросы'
 
-  attributes:
-    user:
-      email: 'Email'
-      username: 'Никнейм'
-      name: 'Ваше имя'
-      avatar_url: 'URL вашей аватарки'
-      color: 'Цвет профиля'
-      password: 'Пароль'
-      password_confirmation: 'Подтверждение пароля'
+  activerecord:
+    attributes:
+      user:
+        email: Email
+        username: Никнейм
+        name: Ваше имя
+        avatar_url: URL вашей аватарки
+        color: Цвет профиля
+        password: Пароль
+        password_confirmation: Подтверждение пароля
