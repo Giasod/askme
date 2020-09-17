@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    @tags = Tag.with_questions
   end
 
   # Действие new будет отзываться по адресу /users/new
