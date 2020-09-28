@@ -6,18 +6,18 @@ class Question < ApplicationRecord
 
   has_many :tag_questions, dependent: :destroy
   has_many :tags, through: :tag_questions
-  
+
   validates :text, length: { maximum: 255 },
                    presence: true
-  
-  after_commit :update_tags, on: %i[create update]
-  
+
+  after_save_commit :update_tags
+
   private
-  
+
   def update_tags
-    tag_questions.clear
-    "#{text} #{answer}".downcase.scan(Tag::TAG_REGEX).uniq.each do |tag|
-      tags << Tag.find_or_create_by(name: tag)
-    end
+    self.tags =
+      "#{text} #{answer}".downcase.scan(Tag::TAG_REGEX).uniq.map do |tag|
+        Tag.find_or_create_by(name: tag)
+      end
   end
 end
