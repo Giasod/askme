@@ -9,8 +9,4 @@ class Tag < ApplicationRecord
   before_validation { name&.downcase! }
 
   validates :name, presence: true
-
-  def to_param
-    name
-  end
 end
