@@ -1,24 +1,16 @@
-# README
+# Приложение AskMe 
+Привет! Это клон известного приложения AskFm, написанный на Ruby (v. 2.7.1) и Rails (v. 6.0.3.2)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Суть проста: регистрируетесь, задаёте вопросы другим пользователям, отвечаете сами на вопросы.
+Всё как в старые добрые времена :)
 
-Things you may want to cover:
+Приложение написано в рамках учебного курса [Хороший Программист](goodprogrammer.ru)
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Установка и запуск на локальном сервере
+```
+git clone git@github.com:Giasod/askme.git
+cd ./askme
+bundle install
+bundle exec rake db:migrate
+bundle exec rails s
+```
