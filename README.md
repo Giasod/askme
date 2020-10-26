@@ -11,7 +11,9 @@
 git clone git@github.com:Giasod/askme.git
 cd ./askme
 bin/setup
+rails s
 ```
+Ваше приложение находится по адресу `http://localhost:3000/`
 
 Чтобы работала `reCAPTCHA` вам  надо получить свои уникальные ключи.
 Не забудьте указать их в файле `.env`
