@@ -10,25 +10,10 @@
 ```
 git clone git@github.com:Giasod/askme.git
 cd ./askme
-bundle install
-yarn install --check-files
-bundle exec rake db:migrate
-bundle exec rails s
+bin/setup
 ```
 
-Чтобы работала `reCAPTCHA` вам  надо получить свои уникальные ключи. Затем пропишите их у себя
-локально:
-```
-nano ~/.bash_profile
-export RECAPTCHA_ASKME_PUBLIC_KEY="<тут публичный ключ>"
-export RECAPTCHA_ASKME_PRIVATE_KEY="<тут приватный ключ>"
-```
-
-ВАЖНО! Если будете менять названия переменных, не забудьте поменять их в файле `config/initializers/recaptcha.rb`
-
-Если у вас тоже RubyMine, пропишите их в переменных окружения.
-`Edit Configurations -> Environment variables`
-
-В этом окне добавьте переменные и сохраните.
+Чтобы работала `reCAPTCHA` вам  надо получить свои уникальные ключи.
+Не забудьте указать их в файле `.env`
 
 Вуаля, вы восхитительны!
